@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Liste des Départements</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+	<div th:replace="~{template}"></div>
+		<div class="container">
+			<div class="card">
+				<div class="card-header">
+					Liste des Départements
+				</div>
+				<div class="card-body">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Nom Département</th>
+								<th>Nombre d'employés</th>
+								<th>Date d affectation </th>
+								<th>Supprimer</th>
+								<th>Editer</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="d:${Departementss.content}">
+								<td th:text="${d.idDepartement}"></td>
+								<td th:text="${d.nomDepartement}"></td>
+								<td th:text="${d.nombreDepartement}"></td>
+								<td th:text="${d.dateAffectation}"></td>
+
+								<td>
+									<a class="btn btn-danger" th:href="@{/supprimerDepartement(id=${d.idDepartement}, page=${currentPage}, size=${size})}" onclick="return confirm('Etes-vous sûr ?');">Supprimer</a>
+								</td>
+								
+								<td>
+									<a class="btn btn-success" th:href="@{modifierDepartement(id=${d.idDepartement})}">Edit</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<ul class="nav nav-pills">
+						<li th:each="page,status:${pages}">
+							<a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+								th:href="@{ListeDepartement(page=${status.index}, size=${size} ) }"
+								th:text="${status.index }"></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
